@@ -22,21 +22,21 @@ couple values from a giant configuration file, for instance.
 StringView is a struct to reduce allocations further.
 
 
-## utf8
+## Utf8String
 
 The world has largely settled on UTF8 as the standard string format. Why transcode to UTF16 and back
 constantly?
 
-The `utf8` struct aims for `System.String` parity, but using UTF8 as the encoding. Like StringView,
+The `Utf8String` struct aims for `System.String` parity, but using UTF8 as the encoding. Like StringView,
 it allocates as little as possible.
 
 Its allied types are:
-* `Utf8Enumerator`: iterate through Unicode codepoints in a utf8 string.
-* `ReverseUtf8Enumerator`: iterate through Unicode codepoints in a utf8 string, backwards.
+* `Utf8Enumerator`: iterate through Unicode codepoints in a Utf8String.
+* `ReverseUtf8Enumerator`: iterate through Unicode codepoints in a Utf8String, backwards.
 * `Utf8Builder`: like StringBuilder, but for UTF8.
 * `Utf8Writer`: like StringBuilder, but for UTF8 and writing to a Stream that you provide.
 
-The **major caveat** when working with `utf8`: if you forge a `utf8` instance from a mutable byte
+The **major caveat** when working with `Utf8String`: if you forge a `Utf8String` instance from a mutable byte
 buffer, you **must** clone it before altering the buffer. Since it doesn't copy the data by default,
 changes in the underlying buffer are changes in the string!
 
@@ -50,6 +50,6 @@ System.String to compile the 413KB reference document, run time took 1.02 second
 When using StringView, the run time was reduced to 0.12 seconds and allocations were reduced to
 3.8MB of String objects. Other allocations were not significantly changed.
 
-When using utf8, the run time was reduced to 0.03 seconds. String allocations were reduced to 300KB.
+When using Utf8String, the run time was reduced to 0.03 seconds. String allocations were reduced to 300KB.
 Other allocations were slightly reduced: `System.Char[]` allocations were converted to
 `System.Byte[]` and dropped by 300KB.
